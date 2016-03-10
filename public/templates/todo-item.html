@@ -19,9 +19,9 @@
                 <a class="dropdown dropdown-toggle td-align-bottom" data-toggle="dropdown" href="#">
                     <b class="glyphicon glyphicon-chevron-down"></b>
                     <ul class="dropdown-menu">
-                        <li><a href="#" ng-mouseup="changeState(task._id, TASK_STATE.ACTIVE)">Active</a></li>
-                        <li><a href="#" ng-mouseup="changeState(task._id, TASK_STATE.ON_HOLD)">On hold</a></li>
-                        <li><a href="#" ng-mouseup="changeState(task._id, TASK_STATE.COMPLETE)">Complete</a></li>
+                        <li><a href="#" ng-mouseup="changeState(task._id, TASK_STATE.ACTIVE)">Active {{task._id}}</a></li>
+                        <li><a href="#" ng-mouseup="changeState(task._id, TASK_STATE.ON_HOLD)">On hold {{task._id}}</a></li>
+                        <li><a href="#" ng-mouseup="changeState(task._id, TASK_STATE.COMPLETE)">Complete {{task._id}}</a></li>
                     </ul>
                 </a>
             </div>

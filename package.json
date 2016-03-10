@@ -1,9 +1,8 @@
 {
-    "name": "mean-todo",
-    "version": "0.0.1",
-    "description": "The meanest todo app ever.",
+    "name": "primus-todo",
+    "version": "0.0.2",
     "main": "server.js",
-    "author": "mbonaci",
+    "author": "",
     "dependencies": {
         "body-parser": "^1.2.0",
         "express": "^4.3.1",

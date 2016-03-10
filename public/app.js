@@ -1,6 +1,6 @@
 'use strict';
 
-var meanTodo = angular.module('MeanTodo', ['primus','angular-loading-bar','ngAnimate'])
+var meanTodo = angular.module('MeanTodo', ['primus', 'angular-loading-bar', 'ngAnimate'])
 
 
 .config(function(primusProvider) {
@@ -16,8 +16,8 @@ var meanTodo = angular.module('MeanTodo', ['primus','angular-loading-bar','ngAni
 })
 
 
-.controller("mainController", ["$scope",'$timeout', "$http", "primus",
-    function($scope,$timeout, $http, primus) {
+.controller("mainController", ["$scope", '$timeout', "$http", "primus",
+    function($scope, $timeout, $http, primus) {
 
         // in production: get the enum from the back-end
         var TASK_STATE = {
@@ -28,23 +28,24 @@ var meanTodo = angular.module('MeanTodo', ['primus','angular-loading-bar','ngAni
 
         $scope.TASK_STATE = TASK_STATE;
 
+        $scope.init = function() {
 
-        /** when landing on the page (i.e. loading controller): **/
-        // clear the task entry form
-        $scope.task = {};
-
-
-        // fetch all tasks from the back-end
-        $http.get('/api/tasks')
-            .success(function(data) {
-                $scope.tasks = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            });
+            /** when landing on the page (i.e. loading controller): **/
+            // clear the task entry form
+            $scope.task = {};
 
 
+            // fetch all tasks from the back-end
+            $http.get('/api/tasks')
+                .success(function(data) {
+                    $scope.tasks = data;
+                    console.log(data);
+                })
+                .error(function(data) {
+                    console.log('Error: ' + data);
+                });
+
+        };
         /** user actions: **/
         // submit a new task
         $scope.createTodo = function $createTodo() {
@@ -60,6 +61,7 @@ var meanTodo = angular.module('MeanTodo', ['primus','angular-loading-bar','ngAni
                     console.log("new todo");
 
                     notifyNewTask(newTask); // notify others
+                    $scope.init();
                 })
                 .error(function(data) {
                     console.log('Error: ' + data);
@@ -68,9 +70,9 @@ var meanTodo = angular.module('MeanTodo', ['primus','angular-loading-bar','ngAni
 
 
         $scope.changeState = function $changeState(taskId, newState) {
-            console.log(taskId,newState);
+            //console.log(taskId,newState);
             // change state of the task
-            updateTaskById(taskId, { state: newState });
+            //updateTaskById(taskId, { state: newState });
 
             // send changes to the back-end
             $http.post('/api/tasks/' + taskId, { meat: { state: newState } })
@@ -78,6 +80,7 @@ var meanTodo = angular.module('MeanTodo', ['primus','angular-loading-bar','ngAni
                     console.log("new state: ", newState);
 
                     notifyTaskState(taskId, newState); // notify others
+                    $scope.init();
                 })
                 .error(function(data) {
                     console.log('Error: ' + data);
@@ -87,7 +90,7 @@ var meanTodo = angular.module('MeanTodo', ['primus','angular-loading-bar','ngAni
 
         $scope.deleteTask = function $deleteTask(taskId) {
             // remove task from our list
-            deleteTaskById(taskId);
+            //deleteTaskById(taskId);
 
             // send changes to the back-end
             $http.delete('/api/tasks/' + taskId)
@@ -95,6 +98,7 @@ var meanTodo = angular.module('MeanTodo', ['primus','angular-loading-bar','ngAni
                     console.log("task deleted: ", taskId);
 
                     notifyDeleteTask(taskId); // notify others
+                    $scope.init();
                 })
                 .error(function(data) {
                     console.log('Error: ' + data);
@@ -206,33 +210,38 @@ var meanTodo = angular.module('MeanTodo', ['primus','angular-loading-bar','ngAni
                 case 'client no':
                     //          console.log('client no', data);
                     $scope.clients = data.meat.clients; // put info on $scope
+                    $scope.init();
                     break;
 
                 case 'task creation':
                     //          console.log('task creation', data);
                     $timeout(function() {
                         $scope.$apply($scope.tasks.push(data.meat));
+                        $scope.init();
                     });
-                    
+
                     break;
 
                 case 'task order':
                     console.log('tasks order', data);
                     updateTaskById(data.meat.id, { state: data.meat.state });
+                    $scope.init();
                     break;
 
                 case 'task state':
                     console.log('tasks state', data);
                     updateTaskById(data.meat.id, { state: data.meat.state });
+                    $scope.init();
                     break;
 
                 case 'task deletion':
                     console.log('tasks deletion', data);
                     deleteTaskById(data.meat.id);
+                    $scope.init();
                     break;
             }
         });
 
-
+        $scope.init();
     }
 ]);
