@@ -1,0 +1,37 @@
+{
+  "name": "mean-todo",
+  "version": "0.0.2",
+  "description": "Rather than programming",
+  "main": "app.js",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "angular",
+    "express",
+    "sockjs",
+    "primus",
+    "node",
+    "mongoose"
+  ],
+  "authors": [
+    "mbonaci@gmail.com"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "~1.2.16",
+    "angular-primus": "~0.2.2",
+    "bootstrap": "~3.1.1",
+    "jquery": ">=1.10.2",
+    "sockjs": "~0.3.4",
+    "angular-loading-bar": "^0.8.0",
+    "angular-animate": "^1.5.0"
+  }
+}
