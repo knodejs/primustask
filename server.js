@@ -104,6 +104,7 @@ var toOthers = function emitToOthers(exceptClientWithId, data) {
  * Mongo
  */
 //mongoose.connect('mongodb://127.0.0.1:27017/todo'); // for on-premise Mongo
+//Change mongoose Version
 mongoose.connect('mongodb://kdotnet:pub@ds011439.mlab.com:11439/todo_realdata');
 db = mongoose.connection;
 db.once('open', function mongoReady() {

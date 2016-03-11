@@ -121,7 +121,11 @@ var meanTodo = angular.module('MeanTodo', ['primus', 'angular-loading-bar', 'ngA
             console.log(element);
             return element.state === 'Active';
         };
-
+        $scope.snapImage = function() {
+            html2canvas(document.body).then(function(canvas) {
+                document.body.appendChild(canvas);
+            });
+        };
 
         // add default attrs to new task
         var amendNewTaskFromScope = function hlpAmendTask() {
